@@ -1,4 +1,5 @@
-import exifread
+import exifread, re, os, sys, glob
+from pathlib import Path
 
 # based on https://gist.github.com/erans/983821
 
@@ -21,6 +22,7 @@ def _convert_to_degress(value):
     s = float(value.values[2].num) / float(value.values[2].den)
 
     return d + (m / 60.0) + (s / 3600.0)
+
     
 def get_exif_location(exif_data):
     """
@@ -45,14 +47,47 @@ def get_exif_location(exif_data):
 
     return lat, lon
 
+
 def get_exif_data(image_file):
     with open(image_file, 'rb') as f:
         exif_tags = exifread.process_file(f)
+        
     return exif_tags 
+
 
 def get_img_gps(image_file):
     lat, lon = get_exif_location(get_exif_data(image_file))
     lat = round(lat, 6)
     lon = round(lon, 6)
 
-    return lat, lon
+    return [lat, lon]
+
+
+def get_img_param(image_file, key):
+    data = get_exif_data(image_file)
+
+    return(_get_if_exist(data, key))
+
+def get_img_dir_gps(dir=None, csv = False):
+    
+    if dir is None:
+        dir = Path(__file__).resolve().parent
+
+    imgs = glob.glob('*.JPG')
+
+    imgs_gps = []
+
+    for img in imgs:
+        imgs_gps.append([img)] + get_img_gps(img))
+    
+    if csv:
+        # TODO: save as csv file if needed
+        pass
+    else:
+        return imgs_gps
+
+
+    
+    
+
+
