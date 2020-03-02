@@ -3,3 +3,5 @@ __pycache__/
 *.MP4
 *.SRT
 test.py
+deploy.bat
+

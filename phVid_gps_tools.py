@@ -78,12 +78,13 @@ def get_img_dir_gps(dir=None, csv = False):
     imgs_gps = []
 
     for img in imgs:
-        imgs_gps.append([img)] + get_img_gps(img))
+        imgs_gps.append([img] + get_img_gps(img))
     
     if csv:
         # TODO: save as csv file if needed
         pass
     else:
+        print(imgs_gps)
         return imgs_gps
 
 
