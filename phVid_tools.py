@@ -76,27 +76,45 @@ def get_img_param(image_file, key):
     return(_get_if_exist(data, key))
 
 
-def get_img_dir_gps(dir=None, csv = False):
+def get_img_dir_gps(dir=None, verbose = False):
     
     if dir is None:
-        dir = Path(__file__).resolve().parent
+        dir='*'
 
-    imgs = glob.glob('*.JPG')
+    dir += '.JPG'
+
+    imgs = glob.glob(dir)
 
     imgs_gps = []
 
     for img in imgs:
         imgs_gps.append([img, time.ctime(os.path.getmtime(img))] + get_img_gps(img))
     
-    if csv:
-        # TODO: save as csv file if needed
-
-        pass
-    else:
+    if verbose:
         print(imgs_gps)
-        return imgs_gps
+    
+    return imgs_gps
+
+def get_img_dir_gps_csv(dir=None):
+
+    imgs_gps = get_img_dir_gps(dir)
+
+    header = ['file_path', 'date', 'latitude', 'longitude']
+
+    out_path = 'out.csv'
+    i = 1
+
+    while os.path.exists(out_path):
+        out_path = 'out_{}.csv'.format(i)
+        i+=1
 
 
+    with open(out_path, 'w', newline="") as f:
+        writer = csv.writer(f)
+
+        writer.writerow(header)
+
+        writer.writerows(imgs_gps)
     
     
 
