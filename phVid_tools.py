@@ -1,7 +1,10 @@
 import exifread, re, os, sys, glob, time, csv
 from pathlib import Path
 
-# based on https://gist.github.com/erans/983821
+
+####################################################################################
+# snakeye's https://gist.github.com/snakeye/fdc372dbf11370fe29eb gist
+####################################################################################
 
 def _get_if_exist(data, key):
     if key in data:
@@ -47,6 +50,10 @@ def get_exif_location(exif_data):
 
     return lat, lon
 
+####################################################################################
+# end of snakeye's gist
+####################################################################################
+
 
 def get_exif_data(image_file):
     with open(image_file, 'rb') as f:
@@ -83,7 +90,7 @@ def get_img_dir_gps(dir=None, csv = False):
     
     if csv:
         # TODO: save as csv file if needed
-        
+
         pass
     else:
         print(imgs_gps)
