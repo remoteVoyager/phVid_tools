@@ -1,4 +1,4 @@
-import exifread, re, os, sys, glob
+import exifread, re, os, sys, glob, time, csv
 from pathlib import Path
 
 # based on https://gist.github.com/erans/983821
@@ -68,6 +68,7 @@ def get_img_param(image_file, key):
 
     return(_get_if_exist(data, key))
 
+
 def get_img_dir_gps(dir=None, csv = False):
     
     if dir is None:
@@ -78,10 +79,11 @@ def get_img_dir_gps(dir=None, csv = False):
     imgs_gps = []
 
     for img in imgs:
-        imgs_gps.append([img] + get_img_gps(img))
+        imgs_gps.append([img, time.ctime(os.path.getmtime(img))] + get_img_gps(img))
     
     if csv:
         # TODO: save as csv file if needed
+        
         pass
     else:
         print(imgs_gps)
