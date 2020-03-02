@@ -111,10 +111,8 @@ def get_img_dir_gps_csv(dir=None):
 
     with open(out_path, 'w', newline="") as f:
         writer = csv.writer(f)
-
-        writer.writerow(header)
-
-        writer.writerows(imgs_gps)
+        writer.writerow(header)     # write header row
+        writer.writerows(imgs_gps)  # write records
     
     
 
