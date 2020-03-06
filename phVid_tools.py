@@ -1,4 +1,4 @@
-import exifread, re, os, sys, glob, time, csv
+import exifread, re, os, sys, glob, time, csv, cv2
 from pathlib import Path
 
 
@@ -114,6 +114,48 @@ def get_img_dir_gps_csv(dir=None):
         writer.writerow(header)     # write header row
         writer.writerows(imgs_gps)  # write records
     
+
+# TODO: extract frame from photo
     
+def extract_frame(vid_src, frame_no):
+
+    current_frame = 0
+
+    vid = cv2.VideoCapture(vid_src)
+
+    out_frame = None
+    
+    succes = True
+
+    while succes and current_frame<frame_no:
+
+        succes, frame = vid.read()
+
+        current_frame += 1
+
+        out_frame = frame_no
+
+    # generate name for frame image:
+    path = os.path.basename(vid_src).split('.')[0] + '.JPG'
+
+    # write image
+    cv2.imwrite(path, frame)
+
+    vid.release()
+    cv2.destroyAllWindows()
+
+    return path
+
+
+    
+
+            
+
+
+
+
+
+
+
 
 

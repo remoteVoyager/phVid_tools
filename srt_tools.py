@@ -64,3 +64,15 @@ def get_dir_avg_gps(dir = None):
         out_list.append((f,) + get_avg_gps(f))
 
     return out_list
+
+
+def get_frame_gps(src, frame):
+    """ get specific frame from SRT file """
+
+    gps_list = get_gps_list(src)
+
+    if frame < 1 or frame > len(gps_list):
+        raise IndexError('frame unavailible') 
+
+    return gps_list[frame-1]
+
