@@ -1,5 +1,6 @@
 import exifread, re, os, sys, glob, time, csv, cv2
 from pathlib import Path
+from GPSPhoto import gpsphoto
 
 
 ####################################################################################
@@ -147,7 +148,17 @@ def extract_frame(vid_src, frame_no):
     return path
 
 
+def geolocate_img(s_img, gps_cords, timestamp=None):
+    """ add GPS data and timestamp to image """
+
+    img = gpsphoto.GPSPhoto(s_img)
+
+    if timestamp is not None:
+        info = gpsphoto.GPSInfo(gps_cords, timeStamp=timestamp)
+    else:
+        info = gpsphoto.GPSInfo(gps_cords)
     
+    img.modGPSData(info, s_img)
 
             
 
