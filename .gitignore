@@ -4,4 +4,5 @@ __pycache__/
 *.SRT
 test.py
 deploy.bat
-
+venv/
+requirements.txt
